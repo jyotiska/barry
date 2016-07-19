@@ -1,7 +1,18 @@
 from optparse import OptionParser
 
-def get_options(argv):
+def get_options():
+    """Organize passed arguments and options to a dictionary.
+
+    Returns:
+        dict: a dictionary with all options and their values
+    Raises:
+        ParserError: when required options are not passed
+    """
+
+    # Initialize the OptionParser
     parser = OptionParser()
+
+    # Define all options and switches with default values, destination variables and help texts
     parser.add_option("-i", "--input", default=None, dest="in_filename", help="Input File Name (Required)", metavar="<input_filename>")
     parser.add_option("-o", "--output", default=None, dest="out_filename", help="Output File Name (Required)", metavar="<output_filename>")
     parser.add_option("-f", "--format", default="csv", dest="out_format", help="Output File Format", metavar="json/csv/xls/xlsx/txt")
@@ -11,9 +22,11 @@ def get_options(argv):
     parser.add_option("-s", "--sort", default=None, dest="sort_column", help="Column name to sort (default None)", metavar="<sort_column_name>")
     parser.add_option("-r", "--rsort", default=None, dest="rsort_column", help="Column name to reverse sort (default None)", metavar="<rsort_column_name>")
 
+    # Parse the options
     (options, args) = parser.parse_args()
 
-    if not options.in_filename:   # if filename is not given
+    # Check for required options whether they have been passed or not
+    if not options.in_filename:
         parser.error('Input file name is required. Use -h for usage.')
 
     if not options.out_filename:
