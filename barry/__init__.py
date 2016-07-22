@@ -18,13 +18,24 @@ def main():
     # Initialize the empty dataframe
     df = None
 
+    # Check if rows need to be skipped from start
+    skip_rows = int(cmd_options["skip_rows"])
+
+    # Check if the user wants to skip header
+    skip_header = cmd_options["skip_header"]
+
+    # Check if the user has passed a list of columns names explicitly
+    column_names = cmd_options["columns"]
+    if column_names is not None:
+        column_names = column_names.split(",")
+
     # Based on extension, convert the file contents to a Pandas dataframe
     if input_file_extension == "xls":
-        df = convert.xls_to_df(cmd_options["in_filename"])
+        df = convert.xls_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
     elif input_file_extension == "xlsx":
-        df = convert.xlsx_to_df(cmd_options["in_filename"])
+        df = convert.xlsx_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
     elif input_file_extension == "csv":
-        df = convert.csv_to_df(cmd_options["in_filename"])
+        df = convert.csv_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
     else:
         raise BarryFileException("Input file format not supported. Currently supported file formats - xls/xlsx/csv")
 

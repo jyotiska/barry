@@ -24,11 +24,13 @@ def detect_file_extension(filename):
         raise BarryFileException("Could not determine input file type from file extension")
 
 
-def xls_to_df(filename):
+def xls_to_df(filename, skip_header, columns):
     """Converts a XLS file to Pandas dataframe.
 
     Args:
         filename (str): name of the file
+        skip_header (bool): whether to skip header
+        columns (list or None): list of column names
     Returns:
         dataframe: a pandas dataframe
     Raises:
@@ -36,7 +38,16 @@ def xls_to_df(filename):
     """
 
     try:
-        return pd.read_excel(filename)
+        # Check if columns names has been passed
+        if columns is not None and len(columns) > 0:
+            skip_header = 0
+
+        # Check if header needs to be skipped
+        if skip_header is True:
+            skip_header = None
+        else:
+            skip_header = 0
+        return pd.read_excel(filename, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
@@ -46,6 +57,8 @@ def xlsx_to_df(filename):
 
     Args:
         filename (str): name of the file
+        skip_header (bool): whether to skip header
+        columns (list or None): list of column names
     Returns:
         dataframe: a pandas dataframe
     Raises:
@@ -53,7 +66,16 @@ def xlsx_to_df(filename):
     """
 
     try:
-        return pd.read_excel(filename)
+        # Check if columns names has been passed
+        if columns is not None and len(columns) > 0:
+            skip_header = 0
+
+        # Check if header needs to be skipped
+        if skip_header is True:
+            skip_header = None
+        else:
+            skip_header = 0
+        return pd.read_excel(filename, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
@@ -63,6 +85,8 @@ def csv_to_df(filename):
 
     Args:
         filename (str): name of the file
+        skip_header (bool): whether to skip header
+        columns (list or None): list of column names
     Returns:
         dataframe: a pandas dataframe
     Raises:
@@ -70,7 +94,16 @@ def csv_to_df(filename):
     """
 
     try:
-        return pd.read_csv(filename)
+        # Check if columns names has been passed
+        if columns is not None and len(columns) > 0:
+            skip_header = 0
+
+        # Check if header needs to be skipped
+        if skip_header is True:
+            skip_header = None
+        else:
+            skip_header = 0
+        return pd.read_csv(filename, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
