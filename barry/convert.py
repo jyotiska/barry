@@ -29,6 +29,7 @@ def xls_to_df(filename, skip_rows, skip_header, columns):
 
     Args:
         filename (str): name of the file
+        skip_rows (int): number of rows to skip from top
         skip_header (bool): whether to skip header
         columns (list or None): list of column names
     Returns:
@@ -57,6 +58,7 @@ def xlsx_to_df(filename, skip_rows, skip_header, columns):
 
     Args:
         filename (str): name of the file
+        skip_rows (int): number of rows to skip from top
         skip_header (bool): whether to skip header
         columns (list or None): list of column names
     Returns:
@@ -85,6 +87,7 @@ def csv_to_df(filename, skip_rows, skip_header, columns):
 
     Args:
         filename (str): name of the file
+        skip_rows (int): number of rows to skip from top
         skip_header (bool): whether to skip header
         columns (list or None): list of column names
     Returns:
