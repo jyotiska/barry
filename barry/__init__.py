@@ -39,6 +39,18 @@ def main():
     else:
         raise BarryFileException("Input file format not supported. Currently supported file formats - xls/xlsx/csv")
 
+    # Handle dataframe transformations
+
+    # Check if a column need to be sorted
+    if cmd_options["sort_column"]:
+        sort_column = cmd_options["sort_column"]
+        ascending = True
+        convert.sort_df(df, sort_column, ascending)
+    elif cmd_options["rsort_column"]:
+        sort_column = cmd_options["rsort_column"]
+        ascending = False
+        convert.sort_df(df, sort_column, ascending)
+
     # Based on the output format, write the dataframe to disk
     if cmd_options["out_format"] == "xls":
         convert.df_to_xls(df, cmd_options["out_filename"])

@@ -1,4 +1,4 @@
-from exceptions import BarryFileException, BarryConversionException, BarryExportException
+from exceptions import BarryFileException, BarryConversionException, BarryExportException, BarryDFException
 import pandas as pd
 
 
@@ -173,3 +173,22 @@ def df_to_csv(df, out_filename):
         df.to_csv(out_filename)
     except Exception as e:
         raise BarryExportException("Could not write dataframe to file %s" % (out_filename))
+
+
+def sort_df(df, sort_column, ascending):
+    """Sort a DataFrame with the column name passed in ascending/descending order.
+
+    Args:
+        df (dataframe): dataframe that needs to be sorted
+        sort_column (str): column to be sorted on
+        ascending (bool): sort order, ascending if True, descending if False
+    Returns:
+        dataframe: a pandas dataframe
+    Raises:
+        BarryDFException: if there is any error while sorting the dataframe
+    """
+
+    try:
+        return df.sort(columns=sort_column, ascending=ascending)
+    except Exception as e:
+        raise BarryDFException("Could not sort dataframe on columns %s" % (sort_column))

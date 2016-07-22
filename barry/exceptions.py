@@ -8,3 +8,6 @@ class BarryConversionException(Exception):
 
 class BarryExportException(Exception):
     """Raise exception when writing dataframe to a file."""
+
+class BarryDFException(Exception):
+    """Raise exception while performing transformation to a dataframe."""
