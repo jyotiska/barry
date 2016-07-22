@@ -24,7 +24,7 @@ def detect_file_extension(filename):
         raise BarryFileException("Could not determine input file type from file extension")
 
 
-def xls_to_df(filename, skip_header, columns):
+def xls_to_df(filename, skip_rows, skip_header, columns):
     """Converts a XLS file to Pandas dataframe.
 
     Args:
@@ -47,12 +47,12 @@ def xls_to_df(filename, skip_header, columns):
             skip_header = None
         else:
             skip_header = 0
-        return pd.read_excel(filename, header=skip_header, names=columns)
+        return pd.read_excel(filename, skiprows=skip_rows, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
 
-def xlsx_to_df(filename):
+def xlsx_to_df(filename, skip_rows, skip_header, columns):
     """Converts a XLSX file to Pandas dataframe.
 
     Args:
@@ -75,12 +75,12 @@ def xlsx_to_df(filename):
             skip_header = None
         else:
             skip_header = 0
-        return pd.read_excel(filename, header=skip_header, names=columns)
+        return pd.read_excel(filename, skiprows=skip_rows, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
 
-def csv_to_df(filename):
+def csv_to_df(filename, skip_rows, skip_header, columns):
     """Converts a CSV file to Pandas dataframe.
 
     Args:
@@ -103,7 +103,7 @@ def csv_to_df(filename):
             skip_header = None
         else:
             skip_header = 0
-        return pd.read_csv(filename, header=skip_header, names=columns)
+        return pd.read_csv(filename, skiprows=skip_rows, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
