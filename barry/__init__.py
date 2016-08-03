@@ -36,7 +36,7 @@ def main():
         column_names = column_names.split(",")
 
     if is_url:
-        df = convert.url_to_csv(cmd_options["in_filename"], skip_rows, skip_header, column_names)
+        df = convert.url_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
     else:
         # Based on extension, convert the file contents to a Pandas dataframe
         if input_file_extension == "xls":
