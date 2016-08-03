@@ -1,5 +1,7 @@
 from exceptions import BarryFileException, BarryConversionException, BarryExportException, BarryDFException
 import pandas as pd
+import requests
+from StringIO import StringIO
 
 
 def detect_file_extension(filename):
@@ -107,6 +109,38 @@ def csv_to_df(filename, skip_rows, skip_header, columns):
         else:
             skip_header = 0
         return pd.read_csv(filename, skiprows=skip_rows, header=skip_header, names=columns)
+    except Exception as e:
+        raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
+
+
+def url_to_df(url, skip_rows, skip_header, columns):
+    """Converts a CSV from HTTP URL to Pandas dataframe.
+
+    Args:
+        url (str): http url of the csv
+        skip_rows (int): number of rows to skip from top
+        skip_header (bool): whether to skip header
+        columns (list or None): list of column names
+    Returns:
+        dataframe: a pandas dataframe
+    Raises:
+        BarryConversionException: if file cannot be converted to dataframe
+    """
+
+    try:
+        # Check if columns names has been passed
+        if columns is not None and len(columns) > 0:
+            skip_header = 0
+
+        # Check if header needs to be skipped
+        if skip_header is True:
+            skip_header = None
+        else:
+            skip_header = 0
+
+        url_content = requests.get(url).content
+
+        return pd.read_csv(StringIO(url_content), skiprows=skip_rows, header=skip_header, names=columns)
     except Exception as e:
         raise BarryConversionException("Could not convert file %s to dataframe" % (filename))
 
