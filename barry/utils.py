@@ -13,7 +13,7 @@ def get_options():
     parser = OptionParser()
 
     # Define all options and switches with default values, destination variables and help texts
-    parser.add_option("-i", "--input", default=None, dest="in_filename", help="Input File Name (Required)", metavar="<input_filename>")
+    parser.add_option("-i", "--input", default=None, dest="in_filename", help="Input File Name or URL (Required)", metavar="<input_filename>")
     parser.add_option("-o", "--output", default=None, dest="out_filename", help="Output File Name (Required)", metavar="<output_filename>")
     parser.add_option("-f", "--format", default="csv", dest="out_format", help="Output File Format", metavar="json/csv/xls/xlsx/txt")
     parser.add_option("--skip-rows", default=0, dest="skip_rows", help="Number of rows to skip (Default 0)")
