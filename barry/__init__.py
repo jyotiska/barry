@@ -12,8 +12,14 @@ def main():
     # Get all command line arguments
     cmd_options = vars(get_options())
 
+    # Set if input filename is a HTTP url, defaults to false
+    is_url = False
+
     # Determine the extension of the input file
-    input_file_extension = convert.detect_file_extension(cmd_options["in_filename"])
+    if cmd_options["in_filename"].startswith("http"):
+        is_url = True
+    else:
+        input_file_extension = convert.detect_file_extension(cmd_options["in_filename"])
 
     # Initialize the empty dataframe
     df = None
@@ -29,15 +35,18 @@ def main():
     if column_names is not None:
         column_names = column_names.split(",")
 
-    # Based on extension, convert the file contents to a Pandas dataframe
-    if input_file_extension == "xls":
-        df = convert.xls_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
-    elif input_file_extension == "xlsx":
-        df = convert.xlsx_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
-    elif input_file_extension == "csv":
-        df = convert.csv_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
+    if is_url:
+        df = convert.url_to_csv(cmd_options["in_filename"], skip_rows, skip_header, column_names)
     else:
-        raise BarryFileException("Input file format not supported. Currently supported file formats - xls/xlsx/csv")
+        # Based on extension, convert the file contents to a Pandas dataframe
+        if input_file_extension == "xls":
+            df = convert.xls_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
+        elif input_file_extension == "xlsx":
+            df = convert.xlsx_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
+        elif input_file_extension == "csv":
+            df = convert.csv_to_df(cmd_options["in_filename"], skip_rows, skip_header, column_names)
+        else:
+            raise BarryFileException("Input file format not supported. Currently supported file formats - xls/xlsx/csv")
 
     # Handle dataframe transformations
 
